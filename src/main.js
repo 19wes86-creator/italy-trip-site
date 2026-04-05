@@ -19,6 +19,57 @@ function showMessage(title, message) {
   `;
 }
 
+/* ------------------- FLIGHTS ------------------- */
+
+function renderFlights(flights) {
+  const flightsContainer = document.getElementById('flights-list');
+  if (!flightsContainer) return;
+
+  flightsContainer.innerHTML = '';
+
+  if (!flights || flights.length === 0) {
+    flightsContainer.innerHTML = '<p class="muted">No flights added yet.</p>';
+    return;
+  }
+
+  flights.forEach((flight) => {
+    const card = document.createElement('div');
+    card.className = 'flight-card';
+
+    card.innerHTML = `
+      <div class="flight-header">
+        <strong>${flight.airline} ${flight.flight_number}</strong>
+      </div>
+      <div>${flight.departure_airport} → ${flight.arrival_airport}</div>
+      <div class="muted">${flight.travel_date}</div>
+
+      <div><strong>Depart:</strong> ${flight.departure_time || '-'}</div>
+      <div><strong>Arrive:</strong> ${flight.arrival_time || '-'}</div>
+      <div><strong>Confirmation:</strong> ${flight.confirmation_code || '-'}</div>
+
+      ${
+        flight.tracker_url
+          ? `<a class="map-link" href="${flight.tracker_url}" target="_blank" rel="noreferrer">Track Flight</a>`
+          : ''
+      }
+      ${
+        flight.booking_url
+          ? `<a class="map-link" href="${flight.booking_url}" target="_blank" rel="noreferrer">Manage Booking</a>`
+          : ''
+      }
+      ${
+        flight.check_in_url
+          ? `<a class="map-link" href="${flight.check_in_url}" target="_blank" rel="noreferrer">Check In</a>`
+          : ''
+      }
+    `;
+
+    flightsContainer.appendChild(card);
+  });
+}
+
+/* ------------------- STOPS ------------------- */
+
 function renderStops(stopsListData) {
   const stopsList = document.getElementById('stops-list');
   stopsList.innerHTML = '';
@@ -90,38 +141,13 @@ function renderStopDetails(stop) {
       </div>
     `;
 
-    if (day.items && day.items.length > 0) {
-      day.items.forEach((item) => {
-        const itemCard = document.createElement('div');
-        itemCard.className = 'item-card';
-
-        itemCard.innerHTML = `
-          <div class="item-name">${item.name || 'Untitled item'}</div>
-          <div class="muted">${item.type || 'activity'}</div>
-          ${item.time ? `<div><strong>Time:</strong> ${item.time}</div>` : ''}
-          ${item.address ? `<div><strong>Address:</strong> ${item.address}</div>` : ''}
-          ${item.notes ? `<div><strong>Notes:</strong> ${item.notes}</div>` : ''}
-          ${
-            item.mapsUrl
-              ? `<a class="map-link" href="${item.mapsUrl}" target="_blank" rel="noreferrer">Open in Maps</a>`
-              : ''
-          }
-        `;
-
-        dayCard.appendChild(itemCard);
-      });
-    } else {
-      const emptyText = document.createElement('p');
-      emptyText.className = 'muted';
-      emptyText.textContent = 'No items added yet for this day.';
-      dayCard.appendChild(emptyText);
-    }
-
     detailsContent.appendChild(dayCard);
   });
 }
 
-function renderAppWithData(stopsData) {
+/* ------------------- APP ------------------- */
+
+function renderAppWithData(stopsData, flightsData) {
   const app = document.querySelector('#app');
 
   app.innerHTML = `
@@ -129,6 +155,11 @@ function renderAppWithData(stopsData) {
       <h1>Italy Trip 2026</h1>
       <p class="subtitle">Trip overview and daily itinerary</p>
     </header>
+
+    <section class="panel flights-panel">
+      <h2>Flights</h2>
+      <div id="flights-list"></div>
+    </section>
 
     <main class="layout">
       <section class="panel left-panel">
@@ -145,52 +176,64 @@ function renderAppWithData(stopsData) {
     </main>
   `;
 
+  renderFlights(flightsData);
   renderStops(stopsData);
 }
 
-async function loadCities() {
+/* ------------------- LOAD DATA ------------------- */
+
+async function loadData() {
   showMessage('Loading...', 'Loading itinerary from Supabase.');
 
-  const { data, error } = await supabase
-    .from('cities')
-    .select(`
-      id,
-      name,
-      start_date,
-      end_date,
-      stays!stays_city_id_fkey (
+  const [citiesRes, flightsRes] = await Promise.all([
+    supabase
+      .from('cities')
+      .select(`
+        id,
         name,
-        address,
-        maps_url,
-        booking_url
-      ),
-      days (
-  id,
-  date,
-  title,
-  order_index,
-  items!items_day_id_fkey (
-    type,
-    name,
-    time,
-    address,
-    maps_url,
-    notes,
-    order_index
-  )
-)
-    `)
-    .order('order_index');
+        start_date,
+        end_date,
+        stays!stays_city_id_fkey (
+          name,
+          address,
+          maps_url,
+          booking_url
+        ),
+        days (
+          id,
+          date,
+          title,
+          order_index,
+          items!items_day_id_fkey (
+            type,
+            name,
+            time,
+            address,
+            maps_url,
+            notes,
+            order_index
+          )
+        )
+      `)
+      .order('order_index'),
 
-  if (error) {
-    console.error('Error loading cities:', error);
-    showMessage('Error loading cities', error.message || 'Unknown error');
+    supabase
+      .from('flights')
+      .select('*')
+      .order('order_index'),
+  ]);
+
+  if (citiesRes.error) {
+    showMessage('Error loading cities', citiesRes.error.message);
     return;
   }
 
-  console.log('Loaded cities:', data);
+  if (flightsRes.error) {
+    showMessage('Error loading flights', flightsRes.error.message);
+    return;
+  }
 
-  const formattedStops = (data || []).map((city) => {
+  const formattedStops = (citiesRes.data || []).map((city) => {
     const firstStay = Array.isArray(city.stays)
       ? city.stays[0]
       : city.stays || null;
@@ -205,17 +248,6 @@ async function loadCities() {
       .map((day) => ({
         date: day.date,
         title: day.title || '',
-        items: (day.items || [])
-          .slice()
-          .sort((a, b) => (a.order_index || 0) - (b.order_index || 0))
-          .map((item) => ({
-            type: item.type || '',
-            name: item.name || '',
-            time: item.time || '',
-            address: item.address || '',
-            mapsUrl: item.maps_url || '',
-            notes: item.notes || '',
-          })),
       }));
 
     return {
@@ -244,10 +276,10 @@ async function loadCities() {
     return;
   }
 
-  renderAppWithData(formattedStops);
+  renderAppWithData(formattedStops, flightsRes.data || []);
 }
 
-loadCities().catch((error) => {
+loadData().catch((error) => {
   console.error('Unexpected app error:', error);
   showMessage('Unexpected error', error.message || 'Something went wrong.');
-}); 
+});
