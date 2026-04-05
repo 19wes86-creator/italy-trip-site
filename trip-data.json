@@ -1,0 +1,583 @@
+{
+  "tripTitle": "Italy Trip 2026",
+  "stops": [
+    {
+      "city": "Rome",
+      "startDate": "2026-08-29",
+      "endDate": "2026-09-03",
+      "totalCost": "1170.77 CAD",
+      "paid": true,
+      "stay": {
+        "name": "Rome Stay",
+        "address": "Rome, Italy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Rome%2C%20Italy"
+      },
+      "days": [
+        {
+          "date": "2026-08-29",
+          "title": "Arrival and start exploring Rome",
+          "items": [
+            {
+              "type": "activity",
+              "name": "Explore Rome highlights",
+              "time": "",
+              "address": "Rome, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Rome%2C%20Italy",
+              "notes": "Possible sights from your list include the Colosseum, Roman Forum, Palatine Hill, Pantheon, Trevi Fountain, Spanish Steps, Vatican City, St Peter’s Basilica, Sistine Chapel, Castel Sant'Angelo, Monti District, Aventine Hill, Mouth of Truth, Arch of Constantine and more."
+            }
+          ]
+        },
+        {
+          "date": "2026-08-30",
+          "title": "Rome sightseeing",
+          "items": [
+            {
+              "type": "activity",
+              "name": "Colosseum",
+              "time": "",
+              "address": "Colosseum, Rome, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Colosseum%2C%20Rome%2C%20Italy",
+              "notes": ""
+            },
+            {
+              "type": "activity",
+              "name": "Roman Forum",
+              "time": "",
+              "address": "Roman Forum, Rome, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Roman%20Forum%2C%20Rome%2C%20Italy",
+              "notes": ""
+            },
+            {
+              "type": "activity",
+              "name": "Palatine Hill",
+              "time": "",
+              "address": "Palatine Hill, Rome, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Palatine%20Hill%2C%20Rome%2C%20Italy",
+              "notes": ""
+            }
+          ]
+        },
+        {
+          "date": "2026-08-31",
+          "title": "Vatican and central Rome",
+          "items": [
+            {
+              "type": "activity",
+              "name": "The Sistine Chapel",
+              "time": "",
+              "address": "Sistine Chapel, Vatican City",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sistine%20Chapel%2C%20Vatican%20City",
+              "notes": ""
+            },
+            {
+              "type": "activity",
+              "name": "St Peter’s Basilica",
+              "time": "",
+              "address": "St Peter's Basilica, Vatican City",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=St%20Peter%27s%20Basilica%2C%20Vatican%20City",
+              "notes": ""
+            },
+            {
+              "type": "activity",
+              "name": "Castel Sant'Angelo",
+              "time": "",
+              "address": "Castel Sant'Angelo, Rome, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Castel%20Sant%27Angelo%2C%20Rome%2C%20Italy",
+              "notes": ""
+            }
+          ]
+        },
+        {
+          "date": "2026-09-01",
+          "title": "Historic Rome wandering",
+          "items": [
+            {
+              "type": "activity",
+              "name": "Pantheon",
+              "time": "",
+              "address": "Pantheon, Rome, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Pantheon%2C%20Rome%2C%20Italy",
+              "notes": ""
+            },
+            {
+              "type": "activity",
+              "name": "Trevi Fountain",
+              "time": "",
+              "address": "Trevi Fountain, Rome, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Trevi%20Fountain%2C%20Rome%2C%20Italy",
+              "notes": ""
+            },
+            {
+              "type": "activity",
+              "name": "Spanish Steps",
+              "time": "",
+              "address": "Spanish Steps, Rome, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Spanish%20Steps%2C%20Rome%2C%20Italy",
+              "notes": ""
+            }
+          ]
+        },
+        {
+          "date": "2026-09-02",
+          "title": "Extra Rome day",
+          "items": [
+            {
+              "type": "activity",
+              "name": "Optional Rome sights",
+              "time": "",
+              "address": "Rome, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Rome%2C%20Italy",
+              "notes": "Other saved spots: Capuchin Crypts, Villa Farnesina, Borghese Gardens, Appian Way, Papal Gardens, Fontana dell’Acqua Paola, Monti District, Aventine Hill, Mouth of Truth, Arch of Constantine."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "city": "Cinque Terre",
+      "startDate": "2026-09-03",
+      "endDate": "2026-09-06",
+      "totalCost": "934.24 CAD",
+      "paid": false,
+      "stay": {
+        "name": "Cinque Terre Stay",
+        "address": "Cinque Terre, Italy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Cinque%20Terre%2C%20Italy"
+      },
+      "days": [
+        {
+          "date": "2026-09-03",
+          "title": "Arrival in Cinque Terre",
+          "items": [
+            {
+              "type": "activity",
+              "name": "Travel and settle in",
+              "time": "",
+              "address": "Cinque Terre, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Cinque%20Terre%2C%20Italy",
+              "notes": ""
+            }
+          ]
+        },
+        {
+          "date": "2026-09-04",
+          "title": "Boat tour from Monterosso",
+          "items": [
+            {
+              "type": "tour",
+              "name": "Boat Tour from Monterosso",
+              "time": "1:20 PM meet time",
+              "address": "19016 Monterosso al Mare SP, Italia",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=19016%20Monterosso%20al%20Mare%20SP%2C%20Italia",
+              "notes": "3 hours. Meet at the pier where the large boats depart. Arrive 10 minutes early. The boat will pull up briefly for boarding."
+            }
+          ]
+        },
+        {
+          "date": "2026-09-05",
+          "title": "Free day in Cinque Terre",
+          "items": [
+            {
+              "type": "activity",
+              "name": "Explore villages",
+              "time": "",
+              "address": "Cinque Terre, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Cinque%20Terre%2C%20Italy",
+              "notes": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "city": "Florence",
+      "startDate": "2026-09-06",
+      "endDate": "2026-09-12",
+      "totalCost": "1245 CAD",
+      "paid": false,
+      "stay": {
+        "name": "Florence Stay",
+        "address": "Florence, Italy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Florence%2C%20Italy"
+      },
+      "days": [
+        {
+          "date": "2026-09-06",
+          "title": "Arrival and wander Florence",
+          "items": [
+            {
+              "type": "activity",
+              "name": "Explore Florence",
+              "time": "",
+              "address": "Florence, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Florence%2C%20Italy",
+              "notes": "First wandering day."
+            }
+          ]
+        },
+        {
+          "date": "2026-09-07",
+          "title": "More Florence exploring",
+          "items": [
+            {
+              "type": "activity",
+              "name": "Wander Florence",
+              "time": "",
+              "address": "Florence, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Florence%2C%20Italy",
+              "notes": "Second wandering day."
+            }
+          ]
+        },
+        {
+          "date": "2026-09-08",
+          "title": "Pisa and Lucca",
+          "items": [
+            {
+              "type": "daytrip",
+              "name": "Pisa / Lucca",
+              "time": "",
+              "address": "Pisa, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Pisa%2C%20Italy",
+              "notes": ""
+            }
+          ]
+        },
+        {
+          "date": "2026-09-09",
+          "title": "Siena and San Gimignano tour",
+          "items": [
+            {
+              "type": "tour",
+              "name": "Viator - Siena / San Gimignano / winery lunch",
+              "time": "8:00 AM",
+              "address": "Piazza della Stazione, 27, Firenze, Toscana, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Piazza%20della%20Stazione%2027%20Firenze%20Toscana%20Italy",
+              "notes": "12 hours."
+            }
+          ]
+        },
+        {
+          "date": "2026-09-10",
+          "title": "Chianti wine tour",
+          "items": [
+            {
+              "type": "tour",
+              "name": "Chianti Wine Tour",
+              "time": "2:30 PM",
+              "address": "50018 Scandicci FI, Italia",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=50018%20Scandicci%20FI%2C%20Italia",
+              "notes": "6 hours. Meet in front of The Florence Gate Caffetteria at Villa Costanza, Florence Coach Station."
+            }
+          ]
+        },
+        {
+          "date": "2026-09-11",
+          "title": "More Florence exploring",
+          "items": [
+            {
+              "type": "activity",
+              "name": "Explore Florence",
+              "time": "",
+              "address": "Florence, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Florence%2C%20Italy",
+              "notes": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "city": "Sorrento",
+      "startDate": "2026-09-12",
+      "endDate": "2026-09-14",
+      "totalCost": "553.97 CAD",
+      "paid": true,
+      "stay": {
+        "name": "Sorrento Stay",
+        "address": "Sorrento, Italy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sorrento%2C%20Italy"
+      },
+      "days": [
+        {
+          "date": "2026-09-12",
+          "title": "Travel and check in",
+          "items": [
+            {
+              "type": "activity",
+              "name": "Check in and wander later",
+              "time": "",
+              "address": "Sorrento, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sorrento%2C%20Italy",
+              "notes": ""
+            }
+          ]
+        },
+        {
+          "date": "2026-09-13",
+          "title": "Capri day",
+          "items": [
+            {
+              "type": "daytrip",
+              "name": "Explore Capri",
+              "time": "",
+              "address": "Capri, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Capri%2C%20Italy",
+              "notes": "Visit the Blue Grotto and possibly snorkel."
+            }
+          ]
+        },
+        {
+          "date": "2026-09-14",
+          "title": "Morning in Sorrento then move to Positano",
+          "items": [
+            {
+              "type": "transit",
+              "name": "Travel to Positano",
+              "time": "Early / mid-afternoon",
+              "address": "Positano, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Positano%2C%20Italy",
+              "notes": "Ferry or bus."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "city": "Positano",
+      "startDate": "2026-09-14",
+      "endDate": "2026-09-15",
+      "totalCost": "428.37 CAD",
+      "paid": true,
+      "stay": {
+        "name": "Positano Stay",
+        "address": "Positano, Italy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Positano%2C%20Italy"
+      },
+      "days": [
+        {
+          "date": "2026-09-14",
+          "title": "Arrival in Positano",
+          "items": [
+            {
+              "type": "activity",
+              "name": "Enjoy Positano",
+              "time": "",
+              "address": "Positano, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Positano%2C%20Italy",
+              "notes": ""
+            }
+          ]
+        },
+        {
+          "date": "2026-09-15",
+          "title": "Morning in Positano then head to Ravello / Minori",
+          "items": [
+            {
+              "type": "transit",
+              "name": "Travel toward Ravello and Minori",
+              "time": "Mid / late afternoon",
+              "address": "Ravello, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Ravello%2C%20Italy",
+              "notes": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "city": "Minori",
+      "startDate": "2026-09-15",
+      "endDate": "2026-09-17",
+      "totalCost": "465.20 CAD",
+      "paid": true,
+      "stay": {
+        "name": "Minori Stay",
+        "address": "Minori, Italy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Minori%2C%20Italy"
+      },
+      "days": [
+        {
+          "date": "2026-09-15",
+          "title": "Ravello sights",
+          "items": [
+            {
+              "type": "activity",
+              "name": "Duomo di Ravello",
+              "time": "",
+              "address": "Duomo di Ravello, Ravello, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Duomo%20di%20Ravello%2C%20Ravello%2C%20Italy",
+              "notes": ""
+            },
+            {
+              "type": "activity",
+              "name": "Chiesa dell’Annunziata",
+              "time": "",
+              "address": "Chiesa dell'Annunziata, Ravello, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chiesa%20dell%27Annunziata%2C%20Ravello%2C%20Italy",
+              "notes": ""
+            },
+            {
+              "type": "activity",
+              "name": "San Giovanni del Toro",
+              "time": "",
+              "address": "San Giovanni del Toro, Ravello, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=San%20Giovanni%20del%20Toro%2C%20Ravello%2C%20Italy",
+              "notes": ""
+            },
+            {
+              "type": "activity",
+              "name": "Villa Rufolo",
+              "time": "",
+              "address": "Villa Rufolo, Ravello, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Villa%20Rufolo%2C%20Ravello%2C%20Italy",
+              "notes": ""
+            }
+          ]
+        },
+        {
+          "date": "2026-09-16",
+          "title": "Finish Ravello and hike toward Amalfi",
+          "items": [
+            {
+              "type": "activity",
+              "name": "Villa Cimbrone",
+              "time": "",
+              "address": "Villa Cimbrone, Ravello, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Villa%20Cimbrone%2C%20Ravello%2C%20Italy",
+              "notes": "Amazing views and start the hike to Amalfi."
+            }
+          ]
+        },
+        {
+          "date": "2026-09-17",
+          "title": "Head to Naples after breakfast",
+          "items": [
+            {
+              "type": "transit",
+              "name": "Travel to Naples",
+              "time": "After breakfast",
+              "address": "Naples, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Naples%2C%20Italy",
+              "notes": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "city": "Naples",
+      "startDate": "2026-09-17",
+      "endDate": "2026-09-19",
+      "totalCost": "",
+      "paid": false,
+      "stay": {
+        "name": "Naples Stay",
+        "address": "Naples, Italy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Naples%2C%20Italy"
+      },
+      "days": [
+        {
+          "date": "2026-09-17",
+          "title": "Explore Naples",
+          "items": [
+            {
+              "type": "activity",
+              "name": "Naples waterfront",
+              "time": "",
+              "address": "Naples waterfront, Naples, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Naples%20waterfront%2C%20Naples%2C%20Italy",
+              "notes": ""
+            },
+            {
+              "type": "activity",
+              "name": "Funicular to Vomero for sunset",
+              "time": "",
+              "address": "Vomero, Naples, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Vomero%2C%20Naples%2C%20Italy",
+              "notes": "Take the Centrale line up and walk down via Salita del Petraio."
+            },
+            {
+              "type": "food",
+              "name": "Local pizza spot",
+              "time": "",
+              "address": "Naples, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=AVPN%20pizza%20Naples%2C%20Italy",
+              "notes": "Find a local place certified with the AVPN sign."
+            }
+          ]
+        },
+        {
+          "date": "2026-09-18",
+          "title": "Pompeii and Vesuvius",
+          "items": [
+            {
+              "type": "tour",
+              "name": "Pompeii and Vesuvius tour",
+              "time": "",
+              "address": "Pompeii, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Pompeii%2C%20Italy",
+              "notes": "Then explore Naples and get more pizza."
+            }
+          ]
+        },
+        {
+          "date": "2026-09-19",
+          "title": "Fly to Sardinia",
+          "items": [
+            {
+              "type": "transit",
+              "name": "Flight to Olbia",
+              "time": "",
+              "address": "Olbia, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Olbia%2C%20Italy",
+              "notes": "Prefer a flight later than 6:00 AM if possible."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "city": "Sardinia",
+      "startDate": "2026-09-19",
+      "endDate": "2026-09-26",
+      "totalCost": "",
+      "paid": false,
+      "stay": {
+        "name": "Sardinia Stay",
+        "address": "Olbia, Sardinia, Italy",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Olbia%2C%20Sardinia%2C%20Italy"
+      },
+      "days": [
+        {
+          "date": "2026-09-19",
+          "title": "Arrive in Sardinia",
+          "items": [
+            {
+              "type": "activity",
+              "name": "Arrival and settle in",
+              "time": "",
+              "address": "Olbia, Sardinia, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Olbia%2C%20Sardinia%2C%20Italy",
+              "notes": ""
+            }
+          ]
+        },
+        {
+          "date": "2026-09-20",
+          "title": "Open Sardinia day",
+          "items": [
+            {
+              "type": "activity",
+              "name": "Plan Sardinia day",
+              "time": "",
+              "address": "Sardinia, Italy",
+              "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sardinia%2C%20Italy",
+              "notes": "No specific itinerary saved yet."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
