@@ -169,6 +169,15 @@ function renderStopDetails(stop) {
   detailsTitle.textContent = stop.city;
   detailsContent.innerHTML = '';
 
+  if (stop.imageUrl) {
+    const imageBox = document.createElement('div');
+    imageBox.className = 'city-image-box';
+    imageBox.innerHTML = `
+      <img class="city-image" src="${stop.imageUrl}" alt="${stop.city}" />
+    `;
+    detailsContent.appendChild(imageBox);
+  }
+
   const stayBox = document.createElement('div');
   stayBox.className = 'stay-box';
 
@@ -260,6 +269,7 @@ async function loadData() {
         start_date,
         end_date,
         order_index,
+        image_url,
         stays!stays_city_id_fkey (
           name,
           address,
@@ -369,6 +379,7 @@ async function loadData() {
       city: city.name,
       startDate: city.start_date,
       endDate: city.end_date,
+      imageUrl: city.image_url || '',
       stay: firstStay
         ? {
             name: firstStay.name || '',
