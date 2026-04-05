@@ -19,6 +19,11 @@ function showMessage(title, message) {
   `;
 }
 
+function buildGoogleMapsSearchUrl(query) {
+  if (!query) return '';
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
 /* ------------------- FLIGHTS ------------------- */
 
 function renderFlights(flights) {
@@ -72,6 +77,8 @@ function renderFlights(flights) {
 
 function renderStops(stopsListData) {
   const stopsList = document.getElementById('stops-list');
+  if (!stopsList) return;
+
   stopsList.innerHTML = '';
 
   stopsListData.forEach((stop, index) => {
@@ -97,9 +104,67 @@ function renderStops(stopsListData) {
   });
 }
 
+function renderTravelLeg(leg) {
+  if (!leg) {
+    return `
+      <div class="travel-leg-box">
+        <h3>Next Stop</h3>
+        <p class="muted">No travel guidance added yet for the next leg.</p>
+      </div>
+    `;
+  }
+
+  const departureMapUrl = buildGoogleMapsSearchUrl(leg.departureStation);
+  const arrivalMapUrl = buildGoogleMapsSearchUrl(leg.arrivalStation);
+
+  return `
+    <div class="travel-leg-box">
+      <h3>Next Stop: ${leg.toCityName || 'Next destination'}</h3>
+      <p>${leg.routeSummary || 'Travel details coming soon.'}</p>
+
+      <p><strong>Mode:</strong> ${leg.mode || '-'}</p>
+      <p><strong>Operator:</strong> ${leg.operator || '-'}</p>
+      <p><strong>Duration:</strong> ${leg.durationText || '-'}</p>
+
+      <p><strong>From:</strong> ${leg.departureStation || '-'}</p>
+      ${
+        departureMapUrl
+          ? `<a class="map-link" href="${departureMapUrl}" target="_blank" rel="noreferrer">Directions to departure point</a>`
+          : ''
+      }
+
+      <p><strong>To:</strong> ${leg.arrivalStation || '-'}</p>
+      ${
+        arrivalMapUrl
+          ? `<a class="map-link" href="${arrivalMapUrl}" target="_blank" rel="noreferrer">View arrival point</a>`
+          : ''
+      }
+
+      ${
+        leg.bookingUrl
+          ? `<a class="map-link" href="${leg.bookingUrl}" target="_blank" rel="noreferrer">Book / Check Schedules</a>`
+          : ''
+      }
+      ${
+        leg.backupBookingUrl
+          ? `<a class="map-link" href="${leg.backupBookingUrl}" target="_blank" rel="noreferrer">Backup Booking Option</a>`
+          : ''
+      }
+
+      ${
+        leg.notes
+          ? `<p><strong>Notes:</strong> ${leg.notes}</p>`
+          : ''
+      }
+    </div>
+  `;
+}
+
 function renderStopDetails(stop) {
   const detailsTitle = document.getElementById('details-title');
   const detailsContent = document.getElementById('details-content');
+
+  if (!detailsTitle || !detailsContent) return;
 
   detailsTitle.textContent = stop.city;
   detailsContent.innerHTML = '';
@@ -127,22 +192,23 @@ function renderStopDetails(stop) {
 
   if (!stop.days || stop.days.length === 0) {
     detailsContent.innerHTML += '<p>No daily itinerary added yet.</p>';
-    return;
+  } else {
+    stop.days.forEach((day) => {
+      const dayCard = document.createElement('div');
+      dayCard.className = 'day-card';
+
+      dayCard.innerHTML = `
+        <div class="day-header">
+          <div class="day-date">${day.date}</div>
+          <div class="day-title">${day.title || ''}</div>
+        </div>
+      `;
+
+      detailsContent.appendChild(dayCard);
+    });
   }
 
-  stop.days.forEach((day) => {
-    const dayCard = document.createElement('div');
-    dayCard.className = 'day-card';
-
-    dayCard.innerHTML = `
-      <div class="day-header">
-        <div class="day-date">${day.date}</div>
-        <div class="day-title">${day.title || ''}</div>
-      </div>
-    `;
-
-    detailsContent.appendChild(dayCard);
-  });
+  detailsContent.insertAdjacentHTML('beforeend', renderTravelLeg(stop.travelLeg));
 }
 
 /* ------------------- APP ------------------- */
@@ -185,7 +251,7 @@ function renderAppWithData(stopsData, flightsData) {
 async function loadData() {
   showMessage('Loading...', 'Loading itinerary from Supabase.');
 
-  const [citiesRes, flightsRes] = await Promise.all([
+  const [citiesRes, flightsRes, legsRes] = await Promise.all([
     supabase
       .from('cities')
       .select(`
@@ -193,6 +259,7 @@ async function loadData() {
         name,
         start_date,
         end_date,
+        order_index,
         stays!stays_city_id_fkey (
           name,
           address,
@@ -221,6 +288,26 @@ async function loadData() {
       .from('flights')
       .select('*')
       .order('order_index'),
+
+    supabase
+      .from('travel_legs')
+      .select(`
+        id,
+        from_city_id,
+        to_city_id,
+        travel_date,
+        mode,
+        operator,
+        route_summary,
+        departure_station,
+        arrival_station,
+        duration_text,
+        booking_url,
+        backup_booking_url,
+        notes,
+        order_index
+      `)
+      .order('order_index'),
   ]);
 
   if (citiesRes.error) {
@@ -233,7 +320,35 @@ async function loadData() {
     return;
   }
 
-  const formattedStops = (citiesRes.data || []).map((city) => {
+  if (legsRes.error) {
+    showMessage('Error loading travel legs', legsRes.error.message);
+    return;
+  }
+
+  const cities = citiesRes.data || [];
+  const travelLegs = legsRes.data || [];
+  const cityNameById = Object.fromEntries(cities.map((city) => [city.id, city.name]));
+
+  const legByFromCityId = Object.fromEntries(
+    travelLegs.map((leg) => [
+      leg.from_city_id,
+      {
+        mode: leg.mode || '',
+        operator: leg.operator || '',
+        routeSummary: leg.route_summary || '',
+        departureStation: leg.departure_station || '',
+        arrivalStation: leg.arrival_station || '',
+        durationText: leg.duration_text || '',
+        bookingUrl: leg.booking_url || '',
+        backupBookingUrl: leg.backup_booking_url || '',
+        notes: leg.notes || '',
+        travelDate: leg.travel_date || '',
+        toCityName: cityNameById[leg.to_city_id] || '',
+      },
+    ])
+  );
+
+  const formattedStops = cities.map((city) => {
     const firstStay = Array.isArray(city.stays)
       ? city.stays[0]
       : city.stays || null;
@@ -268,6 +383,7 @@ async function loadData() {
             bookingUrl: '',
           },
       days: sortedDays,
+      travelLeg: legByFromCityId[city.id] || null,
     };
   });
 
