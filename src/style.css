@@ -136,3 +136,17 @@ body {
     grid-template-columns: 1fr;
   }
 }
+.city-image-box {
+  width: 100%;
+  height: 250px; /* controls the visual height */
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.city-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* this is the key */
+  display: block;
+}
