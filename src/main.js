@@ -19,58 +19,6 @@ function showMessage(title, message) {
   `;
 }
 
-/* ------------------- FLIGHTS ------------------- */
-
-function renderFlights(flights) {
-  const flightsContainer = document.getElementById('flights-list');
-  if (!flightsContainer) return;
-
-  flightsContainer.innerHTML = '';
-
-  if (!flights || flights.length === 0) {
-    flightsContainer.innerHTML = '<p class="muted">No flights added yet.</p>';
-    return;
-  }
-
-  flights.forEach((flight) => {
-    const card = document.createElement('div');
-    card.className = 'flight-card';
-
-    card.innerHTML = `
-      <div class="flight-header">
-        <strong>${flight.airline} ${flight.flight_number}</strong>
-      </div>
-      <div>${flight.departure_airport} → ${flight.arrival_airport}</div>
-      <div class="muted">${flight.travel_date}</div>
-
-      <div><strong>Depart:</strong> ${flight.departure_time || '-'}</div>
-      <div><strong>Arrive:</strong> ${flight.arrival_time || '-'}</div>
-
-      <div><strong>Confirmation:</strong> ${flight.confirmation_code || '-'}</div>
-
-      ${
-        flight.tracker_url
-          ? `<a class="map-link" href="${flight.tracker_url}" target="_blank">Track Flight</a>`
-          : ''
-      }
-      ${
-        flight.booking_url
-          ? `<a class="map-link" href="${flight.booking_url}" target="_blank">Manage Booking</a>`
-          : ''
-      }
-      ${
-        flight.check_in_url
-          ? `<a class="map-link" href="${flight.check_in_url}" target="_blank">Check In</a>`
-          : ''
-      }
-    `;
-
-    flightsContainer.appendChild(card);
-  });
-}
-
-/* ------------------- STOPS ------------------- */
-
 function renderStops(stopsListData) {
   const stopsList = document.getElementById('stops-list');
   stopsList.innerHTML = '';
@@ -112,6 +60,16 @@ function renderStopDetails(stop) {
     <h3>Stay</h3>
     <p><strong>Name:</strong> ${stop.stay?.name || 'Not added yet'}</p>
     <p><strong>Address:</strong> ${stop.stay?.address || 'Not added yet'}</p>
+    ${
+      stop.stay?.mapsUrl
+        ? `<a class="map-link" href="${stop.stay.mapsUrl}" target="_blank" rel="noreferrer">Get directions</a>`
+        : `<p class="muted">No directions link added yet.</p>`
+    }
+    ${
+      stop.stay?.bookingUrl
+        ? `<a class="map-link" href="${stop.stay.bookingUrl}" target="_blank" rel="noreferrer">Open booking</a>`
+        : `<p class="muted">No booking link added yet.</p>`
+    }
   `;
 
   detailsContent.appendChild(stayBox);
@@ -132,13 +90,38 @@ function renderStopDetails(stop) {
       </div>
     `;
 
+    if (day.items && day.items.length > 0) {
+      day.items.forEach((item) => {
+        const itemCard = document.createElement('div');
+        itemCard.className = 'item-card';
+
+        itemCard.innerHTML = `
+          <div class="item-name">${item.name || 'Untitled item'}</div>
+          <div class="muted">${item.type || 'activity'}</div>
+          ${item.time ? `<div><strong>Time:</strong> ${item.time}</div>` : ''}
+          ${item.address ? `<div><strong>Address:</strong> ${item.address}</div>` : ''}
+          ${item.notes ? `<div><strong>Notes:</strong> ${item.notes}</div>` : ''}
+          ${
+            item.mapsUrl
+              ? `<a class="map-link" href="${item.mapsUrl}" target="_blank" rel="noreferrer">Open in Maps</a>`
+              : ''
+          }
+        `;
+
+        dayCard.appendChild(itemCard);
+      });
+    } else {
+      const emptyText = document.createElement('p');
+      emptyText.className = 'muted';
+      emptyText.textContent = 'No items added yet for this day.';
+      dayCard.appendChild(emptyText);
+    }
+
     detailsContent.appendChild(dayCard);
   });
 }
 
-/* ------------------- APP ------------------- */
-
-function renderAppWithData(stopsData, flightsData) {
+function renderAppWithData(stopsData) {
   const app = document.querySelector('#app');
 
   app.innerHTML = `
@@ -148,12 +131,6 @@ function renderAppWithData(stopsData, flightsData) {
     </header>
 
     <main class="layout">
-
-      <section class="panel full-panel">
-        <h2>Flights</h2>
-        <div id="flights-list"></div>
-      </section>
-
       <section class="panel left-panel">
         <h2>Stops</h2>
         <div id="stops-list" class="card-list"></div>
@@ -165,71 +142,81 @@ function renderAppWithData(stopsData, flightsData) {
           <p>Select a stop to view the itinerary.</p>
         </div>
       </section>
-
     </main>
   `;
 
-  renderFlights(flightsData);
   renderStops(stopsData);
 }
 
-/* ------------------- LOAD DATA ------------------- */
-
-async function loadData() {
+async function loadCities() {
   showMessage('Loading...', 'Loading itinerary from Supabase.');
 
-  const [citiesRes, flightsRes] = await Promise.all([
-    supabase
-      .from('cities')
-      .select(`
-        id,
+  const { data, error } = await supabase
+    .from('cities')
+    .select(`
+      id,
+      name,
+      start_date,
+      end_date,
+      stays!stays_city_id_fkey (
         name,
-        start_date,
-        end_date,
-        stays!stays_city_id_fkey (
-          name,
-          address,
-          maps_url,
-          booking_url
-        ),
-        days (
-          id,
-          date,
-          title,
-          order_index,
-          items!items_day_id_fkey (
-            type,
-            name,
-            time,
-            address,
-            maps_url,
-            notes,
-            order_index
-          )
-        )
-      `)
-      .order('order_index'),
+        address,
+        maps_url,
+        booking_url
+      ),
+      days (
+  id,
+  date,
+  title,
+  order_index,
+  items!items_day_id_fkey (
+    type,
+    name,
+    time,
+    address,
+    maps_url,
+    notes,
+    order_index
+  )
+)
+    `)
+    .order('order_index');
 
-    supabase
-      .from('flights')
-      .select('*')
-      .order('order_index'),
-  ]);
-
-  if (citiesRes.error) {
-    showMessage('Error loading cities', citiesRes.error.message);
+  if (error) {
+    console.error('Error loading cities:', error);
+    showMessage('Error loading cities', error.message || 'Unknown error');
     return;
   }
 
-  if (flightsRes.error) {
-    showMessage('Error loading flights', flightsRes.error.message);
-    return;
-  }
+  console.log('Loaded cities:', data);
 
-  const formattedStops = (citiesRes.data || []).map((city) => {
+  const formattedStops = (data || []).map((city) => {
     const firstStay = Array.isArray(city.stays)
       ? city.stays[0]
       : city.stays || null;
+
+    const sortedDays = (city.days || [])
+      .slice()
+      .sort((a, b) => {
+        const orderDiff = (a.order_index || 0) - (b.order_index || 0);
+        if (orderDiff !== 0) return orderDiff;
+        return new Date(a.date) - new Date(b.date);
+      })
+      .map((day) => ({
+        date: day.date,
+        title: day.title || '',
+        items: (day.items || [])
+          .slice()
+          .sort((a, b) => (a.order_index || 0) - (b.order_index || 0))
+          .map((item) => ({
+            type: item.type || '',
+            name: item.name || '',
+            time: item.time || '',
+            address: item.address || '',
+            mapsUrl: item.maps_url || '',
+            notes: item.notes || '',
+          })),
+      }));
 
     return {
       city: city.name,
@@ -239,16 +226,28 @@ async function loadData() {
         ? {
             name: firstStay.name || '',
             address: firstStay.address || '',
+            mapsUrl: firstStay.maps_url || '',
+            bookingUrl: firstStay.booking_url || '',
           }
-        : {},
-      days: (city.days || []).map((d) => ({
-        date: d.date,
-        title: d.title,
-      })),
+        : {
+            name: '',
+            address: '',
+            mapsUrl: '',
+            bookingUrl: '',
+          },
+      days: sortedDays,
     };
   });
 
-  renderAppWithData(formattedStops, flightsRes.data || []);
+  if (formattedStops.length === 0) {
+    showMessage('No cities found', 'Add a city row in Supabase to start building the itinerary.');
+    return;
+  }
+
+  renderAppWithData(formattedStops);
 }
 
-loadData();
+loadCities().catch((error) => {
+  console.error('Unexpected app error:', error);
+  showMessage('Unexpected error', error.message || 'Something went wrong.');
+}); 
