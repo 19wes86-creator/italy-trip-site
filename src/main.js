@@ -178,29 +178,38 @@ function renderStopDetails(stop) {
     detailsContent.appendChild(imageBox);
   }
 
-  const stayBox = document.createElement('div');
-  stayBox.className = 'stay-box';
+  const staySection = document.createElement('section');
+  staySection.className = 'detail-section';
 
-  stayBox.innerHTML = `
-    <h3>Stay</h3>
-    <p><strong>Name:</strong> ${stop.stay?.name || 'Not added yet'}</p>
-    <p><strong>Address:</strong> ${stop.stay?.address || 'Not added yet'}</p>
-    ${
-      stop.stay?.mapsUrl
-        ? `<a class="map-link" href="${stop.stay.mapsUrl}" target="_blank" rel="noreferrer">Get directions</a>`
-        : `<p class="muted">No directions link added yet.</p>`
-    }
-    ${
-      stop.stay?.bookingUrl
-        ? `<a class="map-link" href="${stop.stay.bookingUrl}" target="_blank" rel="noreferrer">Open booking</a>`
-        : `<p class="muted">No booking link added yet.</p>`
-    }
+  staySection.innerHTML = `
+    <h3 class="detail-section-title">Where You’re Staying</h3>
+    <div class="stay-box">
+      <p><strong>Name:</strong> ${stop.stay?.name || 'Not added yet'}</p>
+      <p><strong>Address:</strong> ${stop.stay?.address || 'Not added yet'}</p>
+      ${
+        stop.stay?.mapsUrl
+          ? `<a class="map-link" href="${stop.stay.mapsUrl}" target="_blank" rel="noreferrer">Get directions</a>`
+          : `<p class="muted">No directions link added yet.</p>`
+      }
+      ${
+        stop.stay?.bookingUrl
+          ? `<a class="map-link" href="${stop.stay.bookingUrl}" target="_blank" rel="noreferrer">Open booking</a>`
+          : `<p class="muted">No booking link added yet.</p>`
+      }
+    </div>
   `;
 
-  detailsContent.appendChild(stayBox);
+  detailsContent.appendChild(staySection);
+
+  const itinerarySection = document.createElement('section');
+  itinerarySection.className = 'detail-section';
+
+  itinerarySection.innerHTML = `
+    <h3 class="detail-section-title">Itinerary</h3>
+  `;
 
   if (!stop.days || stop.days.length === 0) {
-    detailsContent.innerHTML += '<p>No daily itinerary added yet.</p>';
+    itinerarySection.innerHTML += `<p class="muted">No daily itinerary added yet.</p>`;
   } else {
     stop.days.forEach((day) => {
       const dayCard = document.createElement('div');
@@ -213,11 +222,20 @@ function renderStopDetails(stop) {
         </div>
       `;
 
-      detailsContent.appendChild(dayCard);
+      itinerarySection.appendChild(dayCard);
     });
   }
 
-  detailsContent.insertAdjacentHTML('beforeend', renderTravelLeg(stop.travelLeg));
+  detailsContent.appendChild(itinerarySection);
+
+  const nextStopSection = document.createElement('section');
+  nextStopSection.className = 'detail-section';
+  nextStopSection.innerHTML = `
+    <h3 class="detail-section-title">Getting to the Next Stop</h3>
+    ${renderTravelLeg(stop.travelLeg)}
+  `;
+
+  detailsContent.appendChild(nextStopSection);
 }
 
 /* ------------------- APP ------------------- */
