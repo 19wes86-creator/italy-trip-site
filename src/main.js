@@ -170,13 +170,16 @@ function renderStopDetails(stop) {
   detailsContent.innerHTML = '';
 
   if (stop.imageUrl) {
-    const imageBox = document.createElement('div');
-    imageBox.className = 'city-image-box';
-    imageBox.innerHTML = `
-      <img class="city-image" src="${stop.imageUrl}" alt="${stop.city}" />
-    `;
-    detailsContent.appendChild(imageBox);
-  }
+  const imageBox = document.createElement('div');
+  imageBox.className = 'city-image-box';
+  imageBox.innerHTML = `
+    <img class="city-image" src="${stop.imageUrl}" alt="${stop.city}" />
+    <div class="city-image-overlay">
+      <h2 class="city-image-title">${stop.city}</h2>
+    </div>
+  `;
+  detailsContent.appendChild(imageBox);
+}
 
   const staySection = document.createElement('section');
   staySection.className = 'detail-section';
