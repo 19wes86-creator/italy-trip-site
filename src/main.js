@@ -166,7 +166,7 @@ function renderStopDetails(stop) {
 
   if (!detailsTitle || !detailsContent) return;
 
-  detailsTitle.textContent = stop.city;
+  detailsTitle.textContent = stop.imageUrl ? 'Overview' : stop.city;
   detailsContent.innerHTML = '';
 
   if (stop.imageUrl) {
